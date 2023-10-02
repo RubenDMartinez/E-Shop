@@ -109,9 +109,9 @@ public class RegistrarUsuario extends AppCompatActivity {
         } if (nomUsu.isEmpty()) {
             camp12.setError("Este campo no puede quedar vacio");
         } if (conUsu.isEmpty()) {
-            camp13.setError("Este campo no puede quedar vacio");
+            camp13.setError("Este campo no puede quedar vacío");
         }
-
+        //prueba
     }
 
     public boolean validar() {
