@@ -26,13 +26,12 @@ import org.json.JSONObject;
 
 public class FragmentCrearTienda extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener {
 
-    EditText campoDocumento, campoNombre, campoProfesion;
+    EditText txtNom_Usu, txtApe_Usu, txtCed_Usu, txtNac_Usu, txtCel_Usu, txtEml_Usu, txtBar_Usu, txtCiu_Usu, txtDep_Usu, txtDir_Usu, txtUsu_Usu, txtCon_Usu;
     Button botReg;
 
-    private TextView text_respuesta;
-    ProgressDialog  progreso;
+    ProgressDialog progreso;
 
-    RequestQueue   request;
+    RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
 
     private FragmentCrearTiendaBinding binding;
@@ -42,10 +41,20 @@ public class FragmentCrearTienda extends Fragment implements Response.Listener<J
                              Bundle savedInstanceState) {
 
         View vista = inflater.inflate(R.layout.fragment_crear_tienda, container, false);
-        campoDocumento = (EditText) vista.findViewById(R.id.campoDoc);
-        campoNombre = (EditText) vista.findViewById(R.id.campoNombre);
-        campoProfesion = (EditText) vista.findViewById(R.id.campoProfesion);
-        botReg = (Button) vista.findViewById(R.id.btnRegistrar);
+        txtCed_Usu = (EditText) vista.findViewById(R.id.txtCed_Usu);
+        txtNom_Usu = (EditText) vista.findViewById(R.id.txtNom_Usu);
+        txtApe_Usu = (EditText) vista.findViewById(R.id.txtApe_Usu);
+        txtNac_Usu = (EditText) vista.findViewById(R.id.txtNac_Usu);
+        txtCel_Usu = (EditText) vista.findViewById(R.id.txtCel_Usu);
+        txtUsu_Usu = (EditText) vista.findViewById(R.id.txtUsu_Usu);
+        txtEml_Usu = (EditText) vista.findViewById(R.id.txtEml_Usu);
+        txtCon_Usu = (EditText) vista.findViewById(R.id.txtCon_Usu);
+        txtDir_Usu = (EditText) vista.findViewById(R.id.txtDir_Usu);
+        txtBar_Usu = (EditText) vista.findViewById(R.id.txtBar_Usu);
+        txtCiu_Usu = (EditText) vista.findViewById(R.id.txtCiu_Usu);
+        txtDep_Usu = (EditText) vista.findViewById(R.id.txtDep_Usu);
+
+        botReg = (Button) vista.findViewById(R.id.btnTerRegUsu);
 
         request = Volley.newRequestQueue(getContext());
 
@@ -55,18 +64,22 @@ public class FragmentCrearTienda extends Fragment implements Response.Listener<J
                 cargarWebService();
             }
         });
-
         return vista;
     }
 
     private void cargarWebService() {
 
         progreso =  new ProgressDialog(getContext());
-        progreso.setMessage("Cargando...");
+        progreso.setMessage("Registrando usuario...");
         progreso.show();
 
-        String url = "http://192.168.1.8/conexionEShop/wsJSONRegistro.php?documento="+campoDocumento.getText().toString()+
-                "&nombre="+campoNombre.getText().toString()+"&profesion="+campoProfesion.getText().toString();
+        String url = "http://172.18.2.247/conexionEShop/RegistrarUsuario.php?cedu="+txtCed_Usu.getText().toString()+
+                "&nomb="+txtNom_Usu.getText().toString()+"&apel="+txtApe_Usu.getText().toString()+
+                "&fnac="+txtNac_Usu.getText().toString()+"&ncel="+txtCel_Usu.getText().toString()+
+                "&usua="+txtUsu_Usu.getText().toString()+"&emai="+txtEml_Usu.getText().toString()+
+                "&cont="+txtCon_Usu.getText().toString()+"&dire="+txtDir_Usu.getText().toString()+
+                "&barr="+txtDir_Usu.getText().toString()+"&ciud="+txtCiu_Usu.getText().toString()+
+                "&depa="+txtDep_Usu.getText().toString();
 
         url = url.replace(" ","%20");
 
@@ -76,22 +89,28 @@ public class FragmentCrearTienda extends Fragment implements Response.Listener<J
 
     @Override
     public void onResponse(JSONObject response) {
-        Toast.makeText(getContext(), "Se ha registrado correctamente", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
         progreso.hide();
-        campoDocumento.setText("");
-        campoNombre.setText("");
-        campoProfesion.setText("");
+
+        /*txtCed_Usu.setText("");
+        txtNom_Usu.setText("");
+        txtApe_Usu.setText("");
+        txtNac_Usu.setText("");
+        txtCel_Usu.setText("");
+        txtUsu_Usu.setText("");
+        txtEml_Usu.setText("");
+        txtCon_Usu.setText("");
+        txtDir_Usu.setText("");
+        txtBar_Usu.setText("");
+        txtCiu_Usu.setText("");
+        txtDep_Usu.setText("");*/
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-
-        //text_respuesta = text_respuesta.findViewById(R.id.respuesta);
-
         progreso.hide();
         Toast.makeText(getContext(), "No se pudo registrar " + error.toString(), Toast.LENGTH_LONG).show();
         Log.i("Error", error.toString());
-        //text_respuesta.setText("" + error);
     }
 
     @Override
@@ -101,3 +120,8 @@ public class FragmentCrearTienda extends Fragment implements Response.Listener<J
     }
 
 }
+/*
+* Cambiar IP
+* Editar linea 79 a 85 (IP)
+* */
+//http://172.18.3.8/conexionEShop/RegistrarUsuario.php?cedu=4&nomb=de&apel=de&fnac=4&ncel=4&usua=de&emai=de&cont=de&dire=de&barr=de&ciud=de&depa=de

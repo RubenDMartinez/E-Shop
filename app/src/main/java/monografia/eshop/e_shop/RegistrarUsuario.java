@@ -3,34 +3,27 @@ package monografia.eshop.e_shop;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.io.DataOutputStream;
-import java.io.IOException;
+public class RegistrarUsuario extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener{
 
-public class RegistrarUsuario extends AppCompatActivity {
-
-    EditText camp1, camp2, camp3, camp4, camp5, camp6, camp7, camp8, camp9, camp10, camp11, camp12, camp13;
+    EditText camp1, camp2, camp3, camp4, camp5, camp6, camp7, camp8, camp9, camp10, camp11, camp12;
     Button botRegUsu;
-
     ProgressDialog progreso;
 
     RequestQueue request;
@@ -51,66 +44,63 @@ public class RegistrarUsuario extends AppCompatActivity {
         camp8 = (EditText) findViewById(R.id.txtCiu_Usu);
         camp9 = (EditText) findViewById(R.id.txtDep_Usu);
         camp10 = (EditText) findViewById(R.id.txtDir_Usu);
-        camp11 = (EditText) findViewById(R.id.txtApa_Usu);
-        camp12 = (EditText) findViewById(R.id.txtUsu_Usu);
-        camp13 = (EditText) findViewById(R.id.txtCon_Usu);
-
+        camp11 = (EditText) findViewById(R.id.txtUsu_Usu);
+        camp12 = (EditText) findViewById(R.id.txtCon_Usu);
         botRegUsu = (Button) findViewById(R.id.btnTerRegUsu);
+
+        request = Volley.newRequestQueue(this);
 
         botRegUsu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void  onClick (View view) {
-                insertarDatos();
+                insertarDatosNuevoUsuario();
             }
         });
-
     }
 
-    public void insertarDatos() {
-        final String nombre = camp1.getText().toString().trim();
-        final String apelli = camp2.getText().toString().trim();
-        final String cedula = camp3.getText().toString().trim();
-        final String fecNac = camp4.getText().toString().trim();
-        final String numCel = camp5.getText().toString().trim();
-        final String corEle = camp6.getText().toString().trim();
-        final String barrio = camp7.getText().toString().trim();
-        final String ciudad = camp8.getText().toString().trim();
-        final String depart = camp9.getText().toString().trim();
-        final String direcc = camp10.getText().toString().trim();
-        final String aparta = camp11.getText().toString().trim();
-        final String nomUsu = camp12.getText().toString().trim();
-        final String conUsu = camp13.getText().toString().trim();
+    public void insertarDatosNuevoUsuario() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Registrando usuario");
+        progreso =  new ProgressDialog(this);
+        progreso.setMessage("Cargando...");
+        progreso.show();
 
-        if (nombre.isEmpty()) {
-            camp1.setError("Este campo no puede quedar vacio");
-        } if (apelli.isEmpty()) {
-            camp2.setError("Este campo no puede quedar vacio");
-        } if (cedula.isEmpty()) {
-            camp3.setError("Este campo no puede quedar vacio");
-        } if (fecNac.isEmpty()) {
-            camp4.setError("Este campo no puede quedar vacio");
-        } if (numCel.isEmpty()) {
-            camp5.setError("Este campo no puede quedar vacio");
-        } if (corEle.isEmpty()) {
-            camp6.setError("Este campo no puede quedar vacio");
-        } if (barrio.isEmpty()) {
-            camp7.setError("Este campo no puede quedar vacio");
-        } if (ciudad.isEmpty()) {
-            camp8.setError("Este campo no puede quedar vacio");
-        } if (depart.isEmpty()) {
-            camp9.setError("Este campo no puede quedar vacio");
-        } if (direcc.isEmpty()) {
-            camp10.setError("Este campo no puede quedar vacio");
-        } if (aparta.isEmpty()) {
-            camp11.setError("Este campo no puede quedar vacio");
-        } if (nomUsu.isEmpty()) {
-            camp12.setError("Este campo no puede quedar vacio");
-        } if (conUsu.isEmpty()) {
-            camp13.setError("Este campo no puede quedar vacío");
-        }
+        String url = "http://192.168.1.8/conexionEShop/RegistrarUsuario.php?cedula_usu="+camp3.getText().toString()+
+                "&nombre_usu="+camp1.getText().toString()+"&apellido_usu="+camp2.getText().toString()+
+                "&fecha_usu="+camp4.getText().toString()+"&celular_usu="+camp5.getText().toString()+
+                "&foto_usu=foto"+"&user_usu="+camp11.getText().toString()+
+                "&correo_usu="+camp6.getText().toString()+"&contrase_usu="+camp12.getText().toString()+
+                "&dcalle_usu="+camp10.getText().toString()+"&dbarrio_usu="+camp7.getText().toString()+
+                "&dciudad_usu="+camp8.getText().toString()+"&ddeparta_usu="+camp9.getText().toString();
+
+        url = url.replace(" ","%20");
+
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,url,null, this, this);
+        request.add(jsonObjectRequest);
+    }
+
+    public void onResponse(JSONObject response) {
+        Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
+        progreso.hide();
+
+        camp1.setText("");
+        camp2.setText("");
+        camp3.setText("");
+        camp4.setText("");
+        camp5.setText("");
+        camp6.setText("");
+        camp7.setText("");
+        camp8.setText("");
+        camp9.setText("");
+        camp10.setText("");
+        camp11.setText("");
+        camp12.setText("");
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        progreso.hide();
+        Toast.makeText(this, "No se pudo registrar " + error.toString(), Toast.LENGTH_LONG).show();
+        Log.i("Error", error.toString());
     }
 
     public boolean validar() {
@@ -126,7 +116,6 @@ public class RegistrarUsuario extends AppCompatActivity {
         String ciud;
         String depa;
         String dire;
-        String apar;
         String usua;
         String cont;
 
@@ -140,9 +129,8 @@ public class RegistrarUsuario extends AppCompatActivity {
         ciud = camp8.getText().toString();
         depa = camp9.getText().toString();
         dire = camp10.getText().toString();
-        apar = camp11.getText().toString();
-        usua = camp12.getText().toString();
-        cont = camp13.getText().toString();
+        usua = camp11.getText().toString();
+        cont = camp12.getText().toString();
 
         if (nomb.isEmpty()) {
             camp1.setError("Este campo no puede quedar vacio");
@@ -173,14 +161,11 @@ public class RegistrarUsuario extends AppCompatActivity {
         } if (dire.isEmpty()) {
             camp10.setError("Este campo no puede quedar vacio");
             retorno = false;
-        } if (apar.isEmpty()) {
+        } if (usua.isEmpty()) {
             camp11.setError("Este campo no puede quedar vacio");
             retorno = false;
-        } if (usua.isEmpty()) {
-            camp12.setError("Este campo no puede quedar vacio");
-            retorno = false;
         } if (cont.isEmpty()) {
-            camp13.setError("Este campo no puede quedar vacio");
+            camp12.setError("Este campo no puede quedar vacio");
             retorno = false;
         }
         return retorno;

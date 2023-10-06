@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Ingresar"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="200dp"
         android:layout_marginBottom="15dp"
         android:textColor="@color/white"
         android:backgroundTint="@color/SecondaryColor"

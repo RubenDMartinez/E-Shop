@@ -116,31 +116,14 @@
                 android:layout_marginTop="20dp"
                 android:textColor="@color/black" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/txtDir_Usu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/txtDir_Usu"
-                    android:layout_weight="1"
-                    android:layout_marginTop="20dp"
-                    android:hint="Dirección"
-                    android:textColorHint="@color/gray"
-                    android:inputType="textPostalAddress"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/txtApa_Usu"
-                    android:layout_weight="1"
-                    android:layout_marginTop="20dp"
-                    android:hint="Apartamento"
-                    android:textColorHint="@color/gray"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                android:hint="Dirección"
+                android:textColorHint="@color/gray"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/txtUsu_Usu"
@@ -174,8 +157,7 @@
                 android:shadowColor="@color/black"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:onClick="RegUsu"/>
+                android:shadowRadius="2" />
 
         </LinearLayout>
     </ScrollView>
