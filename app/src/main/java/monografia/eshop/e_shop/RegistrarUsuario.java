@@ -1,12 +1,16 @@
 package monografia.eshop.e_shop;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +27,9 @@ import org.json.JSONObject;
 public class RegistrarUsuario extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener{
 
     EditText camp1, camp2, camp3, camp4, camp5, camp6, camp7, camp8, camp9, camp10, camp11, camp12;
-    Button botRegUsu;
+    Button botRegUsu, botFot;
     ProgressDialog progreso;
+    ImageView imgFoto;
 
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
@@ -47,6 +52,7 @@ public class RegistrarUsuario extends AppCompatActivity implements Response.List
         camp11 = (EditText) findViewById(R.id.txtUsu_Usu);
         camp12 = (EditText) findViewById(R.id.txtCon_Usu);
         botRegUsu = (Button) findViewById(R.id.btnTerRegUsu);
+        imgFoto = (ImageView) findViewById(R.id.imagenId);
 
         request = Volley.newRequestQueue(this);
 
@@ -54,6 +60,37 @@ public class RegistrarUsuario extends AppCompatActivity implements Response.List
             @Override
             public void  onClick (View view) {
                 insertarDatosNuevoUsuario();
+            }
+        });
+
+        /*botFot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mostrarDialogOpciones();
+            }
+        });*/
+    }
+
+    private void mostrarDialogOpciones() {
+        final CharSequence[] opciones={"Tomar foto","Elegir de Galeria","Cancelar"};
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Elige una opción");
+        builder.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (opciones[i].equals("Tomar foto")) {
+                    //metodo para llamar a camara
+                    Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Los permisos no fueron aceptados", Toast.LENGTH_LONG).show();
+                } else {
+                    if (opciones[i].equals("Elegir de Galeria")) {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setType("image/");
+                        startActivityForResult(intent.createChooser(intent, "Seleccione"),10);
+                    } else {
+                        dialogInterface.dismiss();
+                    }
+                }
             }
         });
     }
@@ -64,13 +101,13 @@ public class RegistrarUsuario extends AppCompatActivity implements Response.List
         progreso.setMessage("Cargando...");
         progreso.show();
 
-        String url = "http://192.168.1.8/conexionEShop/RegistrarUsuario.php?cedula_usu="+camp3.getText().toString()+
-                "&nombre_usu="+camp1.getText().toString()+"&apellido_usu="+camp2.getText().toString()+
-                "&fecha_usu="+camp4.getText().toString()+"&celular_usu="+camp5.getText().toString()+
-                "&foto_usu=foto"+"&user_usu="+camp11.getText().toString()+
-                "&correo_usu="+camp6.getText().toString()+"&contrase_usu="+camp12.getText().toString()+
-                "&dcalle_usu="+camp10.getText().toString()+"&dbarrio_usu="+camp7.getText().toString()+
-                "&dciudad_usu="+camp8.getText().toString()+"&ddeparta_usu="+camp9.getText().toString();
+        String url = "http://192.168.1.8/conexionEShop/RegistrarUsuario.php?cedu="+camp3.getText().toString()+
+                "&nomb="+camp1.getText().toString()+"&apel="+camp2.getText().toString()+
+                "&fnac="+camp4.getText().toString()+"&ncel="+camp5.getText().toString()+
+                "&usua="+camp11.getText().toString()+"&emai="+camp6.getText().toString()+
+                "&cont="+camp12.getText().toString()+"&dire="+camp10.getText().toString()+
+                "&barr="+camp7.getText().toString()+"&ciud="+camp8.getText().toString()+
+                "&depa="+camp9.getText().toString();
 
         url = url.replace(" ","%20");
 

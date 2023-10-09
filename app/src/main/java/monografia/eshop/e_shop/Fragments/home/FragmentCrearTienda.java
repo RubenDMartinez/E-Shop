@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -92,7 +91,9 @@ public class FragmentCrearTienda extends Fragment implements Response.Listener<J
         Toast.makeText(getContext(), "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
         progreso.hide();
 
-        /*txtCed_Usu.setText("");
+
+
+        txtCed_Usu.setText("");
         txtNom_Usu.setText("");
         txtApe_Usu.setText("");
         txtNac_Usu.setText("");
@@ -103,7 +104,7 @@ public class FragmentCrearTienda extends Fragment implements Response.Listener<J
         txtDir_Usu.setText("");
         txtBar_Usu.setText("");
         txtCiu_Usu.setText("");
-        txtDep_Usu.setText("");*/
+        txtDep_Usu.setText("");
     }
 
     @Override
