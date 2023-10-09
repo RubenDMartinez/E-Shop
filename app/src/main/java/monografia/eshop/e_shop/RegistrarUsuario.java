@@ -80,7 +80,7 @@ public class RegistrarUsuario extends AppCompatActivity implements Response.List
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (opciones[i].equals("Tomar foto")) {
                     //metodo para llamar a camara
-                    Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
                     Toast.makeText(getContext(), "Los permisos no fueron aceptados", Toast.LENGTH_LONG).show();
                 } else {
                     if (opciones[i].equals("Elegir de Galeria")) {
