@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:id="@+id/Nav_Inicio"
+            android:icon="@drawable/ic_menu_inicio"
+            android:title="@string/menu_inicio" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:id="@+id/Nav_Mi_Perfil"
+            android:icon="@drawable/ic_menu_perfil"
+            android:title="@string/menu_mi_perfil" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/Nav_Favoritos"
+            android:icon="@drawable/ic_menu_favoritos"
+            android:title="@string/menu_favoritos" />
+
+        <item
+            android:id="@+id/Nav_Tiendas_Seguidas"
+            android:icon="@drawable/ic_menu_tiendas_seguidas"
+            android:title="Tiendas que sigo"/>
+
+        <item
+            android:id="@+id/Nav_Mis_Compras"
+            android:icon="@drawable/ic_menu_mis_compras"
+            android:title="Mis compras"/>
+
+        <item
+            android:id="@+id/Nav_Configuracion"
+            android:icon="@drawable/ic_menu_configuracion"
+            android:title="Tiendas que sigo"/>
+
+        <item
+            android:id="@+id/Nav_Crear_Tienda"
+            android:icon="@drawable/ic_menu_crear_tienda"
+            android:title="Crear tienda"/>
+
+        <item
+            android:id="@+id/Nav_Cerrar_Sesion"
+            android:icon="@drawable/ic_menu_cerrar_sesion"
+            android:title="Cerrar sesión"/>
     </group>
 </menu>

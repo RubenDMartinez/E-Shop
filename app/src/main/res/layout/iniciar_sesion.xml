@@ -10,17 +10,15 @@
     android:paddingTop="16dp"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".IniciarSesion">
+    tools:context=".Iniciar_Sesion">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BIENVENIDO"
-        android:textSize="23sp"
+    <ImageView
+        android:id="@+id/Logo"
+        android:layout_width="250sp"
+        android:layout_height="100sp"
         android:layout_gravity="center"
-        android:textStyle="bold"
-        android:layout_marginBottom="30dp"
-        android:textColor="@color/black" />
+        android:layout_marginTop="150dp"
+        android:src="@drawable/imagotipo_eshop_col" />
 
     <EditText
         android:id="@+id/txtUsu_Usu"
@@ -30,28 +28,30 @@
         android:textColorHint="@color/gray"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="15dp"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor" />
 
     <EditText
+        android:id="@+id/txtCon_Usu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Contraseña"
         android:textColorHint="@color/gray"
         android:inputType="textPassword"
-        android:layout_marginTop="30dp"
         android:layout_marginBottom="15dp"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor" />
 
     <Button
         android:id="@+id/btnIng"
-        android:layout_width="250dp"
+        android:layout_width="250sp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Ingresar"
-        android:layout_marginTop="200dp"
+        android:text="¡Ingresar!"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="15dp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/SecondaryColor"
+        android:background="@drawable/side_nav_bar"
         android:shadowColor="@color/PrimaryColor"
         android:shadowDx="1"
         android:shadowDy="1"
@@ -60,15 +60,14 @@
 
     <Button
         android:id="@+id/btnReg"
-        android:layout_width="250dp"
+        android:layout_width="220sp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="¡Quiero registrarme!"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="15dp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/SecondaryColor"
-        android:shadowColor="@color/PrimaryColor"
+        android:background="@drawable/side_nav_bar"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"

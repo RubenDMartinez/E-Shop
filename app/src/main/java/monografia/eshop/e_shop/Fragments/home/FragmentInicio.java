@@ -19,11 +19,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import monografia.eshop.e_shop.R;
-import monografia.eshop.e_shop.databinding.FragmentCrearTiendaBinding;
+import monografia.eshop.e_shop.databinding.FragmentInicioBinding;
 
 import org.json.JSONObject;
 
-public class FragmentCrearTienda extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener {
+public class FragmentInicio extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener {
 
     EditText txtNom_Usu, txtApe_Usu, txtCed_Usu, txtNac_Usu, txtCel_Usu, txtEml_Usu, txtBar_Usu, txtCiu_Usu, txtDep_Usu, txtDir_Usu, txtUsu_Usu, txtCon_Usu;
     Button botReg;
@@ -33,25 +33,14 @@ public class FragmentCrearTienda extends Fragment implements Response.Listener<J
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
 
-    private FragmentCrearTiendaBinding binding;
+    private FragmentInicioBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View vista = inflater.inflate(R.layout.fragment_crear_tienda, container, false);
-        txtCed_Usu = (EditText) vista.findViewById(R.id.txtCed_Usu);
+        View vista = inflater.inflate(R.layout.fragment_inicio, container, false);
         txtNom_Usu = (EditText) vista.findViewById(R.id.txtNom_Usu);
-        txtApe_Usu = (EditText) vista.findViewById(R.id.txtApe_Usu);
-        txtNac_Usu = (EditText) vista.findViewById(R.id.txtNac_Usu);
-        txtCel_Usu = (EditText) vista.findViewById(R.id.txtCel_Usu);
-        txtUsu_Usu = (EditText) vista.findViewById(R.id.txtUsu_Usu);
-        txtEml_Usu = (EditText) vista.findViewById(R.id.txtEml_Usu);
-        txtCon_Usu = (EditText) vista.findViewById(R.id.txtCon_Usu);
-        txtDir_Usu = (EditText) vista.findViewById(R.id.txtDir_Usu);
-        txtBar_Usu = (EditText) vista.findViewById(R.id.txtBar_Usu);
-        txtCiu_Usu = (EditText) vista.findViewById(R.id.txtCiu_Usu);
-        txtDep_Usu = (EditText) vista.findViewById(R.id.txtDep_Usu);
 
         botReg = (Button) vista.findViewById(R.id.btnTerRegUsu);
 
@@ -122,7 +111,7 @@ public class FragmentCrearTienda extends Fragment implements Response.Listener<J
 
 }
 /*
-* Cambiar IP
-* Editar linea 79 a 85 (IP)
-* */
+ * Cambiar IP
+ * Editar linea 79 a 85 (IP)
+ * */
 //http://172.18.3.8/conexionEShop/RegistrarUsuario.php?cedu=4&nomb=de&apel=de&fnac=4&ncel=4&usua=de&emai=de&cont=de&dire=de&barr=de&ciud=de&depa=de
