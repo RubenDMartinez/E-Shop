@@ -46,16 +46,16 @@ public class FragmentInicio extends Fragment implements Response.Listener<JSONOb
 
         request = Volley.newRequestQueue(getContext());
 
-        botReg.setOnClickListener(new View.OnClickListener() {
+        /*botReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cargarWebService();
             }
-        });
+        });*/
         return vista;
     }
 
-    private void cargarWebService() {
+    /*private void cargarWebService() {
 
         progreso =  new ProgressDialog(getContext());
         progreso.setMessage("Registrando usuario...");
@@ -73,7 +73,7 @@ public class FragmentInicio extends Fragment implements Response.Listener<JSONOb
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,url,null, this, this);
         request.add(jsonObjectRequest);
-    }
+    }*/
 
     @Override
     public void onResponse(JSONObject response) {
