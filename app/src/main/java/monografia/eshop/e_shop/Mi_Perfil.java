@@ -1,4 +1,4 @@
-package monografia.eshop.e_shop.Fragments.gallery;
+package monografia.eshop.e_shop;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,14 +19,12 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import monografia.eshop.e_shop.R;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link monografia.eshop.e_shop.Mi_Perfil#newInstance} factory method to
+ * Use the {@link Mi_Perfil#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentMiPerfil extends Fragment {
+public class Mi_Perfil extends Fragment {
 
     EditText txtCed, txtNom, txtApe, txtCel, txtFna, txtCor, txtDir, txtBar, txtCiu, txtDep, txtUsu, txtCon;
 
@@ -39,7 +37,7 @@ public class FragmentMiPerfil extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FragmentMiPerfil() {
+    public Mi_Perfil() {
         // Required empty public constructor
     }
 
@@ -52,8 +50,8 @@ public class FragmentMiPerfil extends Fragment {
      * @return A new instance of fragment Mi_Perfil.
      */
     // TODO: Rename and change types and number of parameters
-    public static monografia.eshop.e_shop.Mi_Perfil newInstance(String param1, String param2) {
-        monografia.eshop.e_shop.Mi_Perfil fragment = new monografia.eshop.e_shop.Mi_Perfil();
+    public static Mi_Perfil newInstance(String param1, String param2) {
+        Mi_Perfil fragment = new Mi_Perfil();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

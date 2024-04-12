@@ -1,23 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".Fragments.gallery.FragmentMiPerfil">
 
-    <TextView
-        android:id="@+id/text_gallery"
+    <ImageView
+        android:id="@+id/Logo"
+        android:layout_width="250sp"
+        android:layout_height="100sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/imagotipo_eshop_col" />
+
+    <EditText
+        android:id="@+id/txtCed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:hint="Cédula"
+        android:textColorHint="@color/gray"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/txtNom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/txtApe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Apellido"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/txtCel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Celular"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/txtFna"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fecha de Nacimiento"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/txtCor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Correo Electrónico"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/txtDir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Dirección"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/txtBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Barrio"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/txtCiu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ciudad"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/txtDep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Departamento"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/txtUsu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Usuario"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <EditText
+        android:id="@+id/txtCon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:textColorHint="@color/gray"
+        android:inputType="textPassword"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/PrimaryColor"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/btnConsultarUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consultar Usuario"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/white"
+        android:background="@drawable/side_nav_bar"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:onClick="consultarUsuario" />
+
+</LinearLayout>

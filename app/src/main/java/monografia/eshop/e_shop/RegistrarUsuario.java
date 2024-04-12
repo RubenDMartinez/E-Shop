@@ -1,17 +1,23 @@
 package monografia.eshop.e_shop;
 
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,50 +27,60 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
-public class RegistrarUsuario extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class RegistrarUsuario extends AppCompatActivity {
 
-    //private static final String CARPETA_PRINCIPAL = "misImagenesApp/";
-    //private static final String CARPETA_IMAGEN = "Imagenes";
-    //private static final String DIRECTORIO_IMAGEN = CARPETA_PRINCIPAL + CARPETA_IMAGEN;
-    //private String path;
-    //File fileImagen;
-    //Bitmap bitmap;
+    private static final String CARPETA_PRINCIPAL = "misImagenesApp/";
+    private static final String CARPETA_IMAGEN = "Imagenes";
+    private static final String DIRECTORIO_IMAGEN = CARPETA_PRINCIPAL + CARPETA_IMAGEN;
+    private String path;
+    File fileImagen;
+    Bitmap bitmap;
 
-    //private static final int COD_SELECCIONA = 10;
-    //private static final int COD_FOTO = 20;
+    private static final int COD_SELECCIONA = 10;
+    private static final int COD_FOTO = 20;
+    Button btnTerRegUsu, btnFot;
     EditText txtNom, txtApe, txtCed, txtNac, txtCel, txtEml;
     EditText txtBar, txtCiu, txtDep, txtDir, txtUsu, txtCon;
-    Button btnTerRegUsu, btnFot;
     ProgressDialog progreso;
-    //ImageView imgFoto;
+    ImageView imgFoto;
 
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
+
+    StringRequest stringRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrar_usuario);
 
-        //btnFot = findViewById(R.id.btnFot);
-        //imgFoto = findViewById(R.id.imgFoto);
+        imgFoto = (ImageView) findViewById(R.id.imgFoto);
+        btnFot = (Button) findViewById(R.id.btnFot);
 
+        /*if (validarPermisos()) {
+            btnFot.setEnabled(true);
+        } else {
+            btnFot.setEnabled(false);
+        }*/
 
         txtCed = (EditText) findViewById(R.id.txtCed_Usu);
         txtNom = (EditText) findViewById(R.id.txtNom_Usu);
@@ -80,6 +96,8 @@ public class RegistrarUsuario extends AppCompatActivity implements Response.List
         txtCon = (EditText) findViewById(R.id.txtCon_Usu);
 
         btnTerRegUsu = findViewById(R.id.btnTerRegUsu);
+
+        btnFot = findViewById(R.id.btnFot);
 
         request = Volley.newRequestQueue(getApplicationContext());
 
@@ -147,61 +165,108 @@ public class RegistrarUsuario extends AppCompatActivity implements Response.List
 
         });
 
-        /*btnFot.setOnClickListener(new View.OnClickListener() {
+        btnFot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mostrarDialogOpciones();
             }
-        });*/
+        });
     }
 
-    public void insertarDatosNuevoUsuario() {
+    /*private boolean validarPermisos() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
 
-        progreso = new ProgressDialog(this);
-        progreso.setMessage("Cargando...");
-        progreso.show();
+        if ((checkSelfPermission(CAMERA) == PackageManager.PERMISSION_GRANTED) &&
+                (checkSelfPermission(WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+            return true;
+        }
 
-        String url = "http://10.0.0.37/BDRemota/wsJSONRegistroUsuario.php?txtNom=" + txtNom.getText().toString() +
-                "&txtApe=" + txtApe.getText().toString() + "&txtCed=" + txtCed.getText().toString() +
-                "&txtNac=" + txtNac.getText().toString() + "&txtCel=" + txtCel.getText().toString() +
-                "&txtEml=" + txtEml.getText().toString() + "&txtBar=" + txtBar.getText().toString() +
-                "&txtCiu=" + txtCiu.getText().toString() + "&txtDep=" + txtDep.getText().toString() +
-                "&txtDir=" + txtDir.getText().toString() + "&txtUsu=" + txtUsu.getText().toString() +
-                "&txtCon=" + txtCon.getText().toString();
+        if ((shouldShowRequestPermissionRationale(CAMERA)) ||
+                (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE))) {
+            cargarDialogoRecomendacion();
+        } else {
+            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, CAMERA}, 100);
+        }
 
-        url = url.replace(" ", "%20");
+        return false;
+    }*/
 
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        request.add(jsonObjectRequest);
-    }
+    /*@Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-    /*private void mostrarDialogOpciones() {
-        final CharSequence[] opciones = {"Tomar foto", "Elegir de Galeria", "Cancelar"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(RegistrarUsuario.this);
-        builder.setTitle("Elige una opción");
-        builder.setItems(opciones, new DialogInterface.OnClickListener() {
+        if (requestCode == 100) {
+            if (grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                btnFot.setEnabled(true);
+            } else {
+                solicitarPermisosManual();
+            }
+        }
+
+    }*/
+
+    /*private void solicitarPermisosManual() {
+        final CharSequence[] opciones = {"Si", "No"};
+        final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(RegistrarUsuario.this);
+        alertOpciones.setTitle("¿Desea configurar los permisos de forma manual?");
+        alertOpciones.setItems(opciones, (DialogInterface.OnClickListener) (dialogInterface, i) -> {
+            if (opciones[i].equals("Si")) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Los permisos no fueron otorgados", Toast.LENGTH_LONG).show();
+                dialogInterface.dismiss();
+            }
+        });
+        alertOpciones.show();
+    }*/
+
+    /*private void cargarDialogoRecomendacion() {
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(RegistrarUsuario.this);
+        dialogo.setTitle("Permisos desactivados");
+        dialogo.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la aplicación E-Shop en su dispositivo");
+
+        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (opciones[i].equals("Tomar foto")) {
-                    abrirCamara();
-                } else {
-                    if (opciones[i].equals("Elegir de Galeria")) {
-                        try {
-                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            intent.setType("image/");
-                            startActivityForResult(intent.createChooser(intent, "Seleccione"), COD_SELECCIONA);
-                        } catch (Exception e) {
-                        }
-                    } else {
-                        dialogInterface.dismiss();
+                requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, CAMERA}, 100);
+            }
+        });
+        dialogo.show();
+    }*/
+
+
+    private void mostrarDialogOpciones() {
+        final CharSequence[] opciones = {"Tomar foto", "Elegir de Galeria", "Cancelar"};
+        final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(RegistrarUsuario.this);
+        alertOpciones.setTitle("Elige una opción");
+        alertOpciones.setItems(opciones, (DialogInterface.OnClickListener) (dialogInterface, i) -> {
+            if (opciones[i].equals("Tomar foto")) {
+                abrirCamara();
+            } else {
+                if (opciones[i].equals("Elegir de Galeria")) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setType("image/");
+                        startActivityForResult(Intent.createChooser(intent, "Seleccione"), COD_SELECCIONA);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Error al cargar la imagen de la galeria", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    dialogInterface.dismiss();
                 }
             }
         });
-        builder.show();
-    }*/
+        alertOpciones.show();
+    }
 
-    /*private void abrirCamara() {
+
+    private void abrirCamara() {
         File miFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), DIRECTORIO_IMAGEN);
         boolean isCreada = miFile.exists();
         if (!isCreada) {
@@ -221,9 +286,9 @@ public class RegistrarUsuario extends AppCompatActivity implements Response.List
 
             startActivityForResult(intent, COD_FOTO);
         }
-    }*/
+    }
 
-    /*@Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
@@ -232,12 +297,14 @@ public class RegistrarUsuario extends AppCompatActivity implements Response.List
                     if (resultCode == AppCompatActivity.RESULT_OK) {
                         Uri miPath = data.getData();
                         imgFoto.setImageURI(miPath);
+                        bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), miPath);
+                        imgFoto.setImageBitmap(bitmap);
                     } else {
                         // El usuario canceló la selección o no se realizó con éxito.
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(this, "Error al procesar la imagen seleccionada", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error al procesar la imagen seleccionada", Toast.LENGTH_LONG).show();
                 }
                 break;
 
@@ -252,39 +319,83 @@ public class RegistrarUsuario extends AppCompatActivity implements Response.List
                 imgFoto.setImageBitmap(bitmap);
                 break;
         }
-    }*/
-
-
-    @Override
-    public void onResponse(JSONObject response) {
-        try {
-            if (response != null && response.has("status")) {
-                String status = response.getString("status");
-
-                if (status.equals("success")) {
-                    // Si el registro fue exitoso, mostrar mensaje de éxito
-                    Toast.makeText(RegistrarUsuario.this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(), Iniciar_Sesion.class);
-                    startActivity(intent);
-                } else {
-                    // Si hubo un error en el registro, mostrar mensaje de error correspondiente
-                    String message = response.getString("message");
-                    Toast.makeText(RegistrarUsuario.this, message, Toast.LENGTH_LONG).show();
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(RegistrarUsuario.this, "Error en el formato de respuesta JSON", Toast.LENGTH_LONG).show();
-        }
-
-        progreso.hide();
     }
 
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        progreso.hide();
-        Toast.makeText(getApplicationContext(), "No se pudo registrar " + error.toString(), Toast.LENGTH_LONG).show();
-        Log.i("Error", error.toString());
+    public void insertarDatosNuevoUsuario() {
+
+        progreso = new ProgressDialog(this);
+        progreso.setMessage("Cargando...");
+        progreso.show();
+
+        String url = "http://10.0.0.37/BDRemota/wsJSONRegistroUsuarioFoto.php?";
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) { //Encargado de recibir la respuesta del WebService cuando todo está correcto
+                progreso.hide();
+
+                if (response.trim().equalsIgnoreCase("Registra")) {
+                    Toast.makeText(RegistrarUsuario.this, "Usuario registrado", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(RegistrarUsuario.this, "Error al registrar el usuario", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) { //Encargado de procesar el inconveniente del error y procesar el mismo
+                Toast.makeText(RegistrarUsuario.this, "No se ha podido conectar", Toast.LENGTH_SHORT).show();
+                progreso.hide();
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError { //Usado para enviar los datos por medio del metodo POST
+
+                String cedu = txtCed.getText().toString();
+                String nomb = txtNom.getText().toString();
+                String apel = txtApe.getText().toString();
+                String celu = txtCel.getText().toString();
+                String fnac = txtNac.getText().toString();
+                String mail = txtEml.getText().toString();
+                //String foto = convertirImgString(bitmap);
+                String dire = txtDir.getText().toString();
+                String barr = txtBar.getText().toString();
+                String ciud = txtCiu.getText().toString();
+                String depa = txtDep.getText().toString();
+                String usua = txtUsu.getText().toString();
+                String cont = txtCon.getText().toString();
+
+                Map<String, String> parametros = new HashMap<>();
+                parametros.put("cedu", cedu);
+                parametros.put("nomb", nomb);
+                parametros.put("apel", apel);
+                parametros.put("celu", celu);
+                parametros.put("fnac", fnac);
+                parametros.put("mail", mail);
+                //parametros.put("foto", foto);
+                parametros.put("dire", dire);
+                parametros.put("barr", barr);
+                parametros.put("ciud", ciud);
+                parametros.put("depa", depa);
+                parametros.put("usua", usua);
+                parametros.put("cont", cont);
+
+                return parametros;
+            }
+        };
+
+        request.add(stringRequest);
+
+    }
+
+    private String convertirImgString(Bitmap bitmap) {
+
+        ByteArrayOutputStream array = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, array);
+        byte[] imagenByte = array.toByteArray();
+        String imagenString = android.util.Base64.encodeToString(imagenByte, android.util.Base64.DEFAULT);
+
+        return imagenString;
     }
 
 }
